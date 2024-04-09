@@ -1,0 +1,198 @@
+﻿@model FHP_Res.Entity.Trainee
+@{
+    Layout = null;
+}
+<style>
+    #traineeFormContainer {
+        width: 60vw;
+        margin: 2rem auto;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background: white;
+    }
+
+        #traineeFormContainer #form-header {
+            padding: 10px 20px;
+            color: white;
+            background: #76ABAE;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+        }
+
+        #traineeFormContainer form {
+            padding: 2rem 4rem;
+        }
+
+        #traineeFormContainer input, textarea {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid black;
+            outline: none;
+        }
+
+    #date {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #navigationBtns{
+        display:flex;
+        justify-content:space-between;
+        margin:1rem 1rem;
+    }
+    #navigationBtns a{
+        text-decoration:none;
+        border-radius:3px;
+        padding:0.5rem 1rem;
+        color:white;
+    }
+
+
+</style>
+<div id="modelCloseBtn" onclick="ClosePopUpModel()">
+    X
+</div>
+<div id="traineeFormContainer">
+    <div id="form-header">
+        <h3>
+            <span class="line20px marginBottom7px"></span>
+            Employee Detail
+            <span class="line20px marginBottom7px"></span>
+        </h3>
+    </div>
+    <form>
+        <div>
+            <label asp-for="SerialNumber"></label> <br />
+            <input asp-for="SerialNumber" disabled />
+        </div>
+        <div>
+            <label asp-for="Prefix"></label>
+            <input asp-for="Prefix" disabled />
+        </div>
+        <div>
+            <label asp-for="FirstName"></label> <br />
+            <input asp-for="FirstName" disabled />
+        </div>
+        <div>
+            <label asp-for="MiddleName"></label> <br />
+            <input asp-for="MiddleName" disabled />
+        </div>
+        <div>
+            <label asp-for="LastName"></label> <br />
+            <input asp-for="LastName" disabled />
+        </div>
+        <div>
+            <label asp-for="Education"></label> <br />
+            <input asp-for="Education.long_name" disabled />
+        </div>
+        <div id="date">
+            <div>
+                <label asp-for="JoiningDate"></label> <br />
+                <input value="@Model.JoiningDate.ToString().Split(' ')[0]" disabled />
+            </div>
+            <div>
+                <label asp-for="DateOfBirth"></label> <br />
+                <input value="@Model.DateOfBirth.ToString().Split(' ')[0]" disabled />
+            </div>
+        </div>
+        <div>
+            <label asp-for="CurrentCompany"></label> <br />
+            <input asp-for="CurrentCompany" disabled />
+        </div>
+        <div>
+            <label asp-for="CurrentAddress"></label> <br />
+            <textarea asp-for="CurrentAddress" id="currentAddress" disabled></textarea> 
+        </div>
+        <div id="navigationBtns">
+            <a href="#" id="getFirstBtn" class="activeBtn">First</a>
+            <a href="#" id="getPreviousBtn" class="activeBtn">Previous</a>
+            <a href="#" id="getNextBtn" class="activeBtn">Next</a>
+            <a href="#" id="getLastBtn" class="activeBtn">Last</a>
+        </div>
+    </form>
+</div>
+<script> 
+
+    // ------------- this is going again, if the user is opening the read only view second times, and allInputFields is giving error if it is declared as let
+    var allInputFields = document.querySelectorAll('#traineeFormContainer input');
+    function RenderEntity(data){
+        allInputFields[0].value = data.serialNumber;
+        allInputFields[2].value = data.prefix;
+        allInputFields[3].value = data.firstName;
+        allInputFields[4].value = data.middleName;
+        allInputFields[5].value = data.lastName;
+        allInputFields[6].value = data.education.long_name;
+        allInputFields[7].value = data.joiningDate.split('T')[0];
+        allInputFields[8].value = data.dateOfBirth.split('T')[0];
+        allInputFields[9].value = data.currentCompany;
+        document.querySelector('#traineeFormContainer textarea').value = data.currentAddress;
+    }
+
+    // ---------------------- first trainee
+    document.getElementById('getFirstBtn').addEventListener('click', function () {
+        $.ajax({
+            url: "/Employee/GetFirstTrainee",
+            type:"GET",
+                success: function(data) {
+                    RenderEntity(data);
+                },
+            error: function (xhr, status, error) {
+                console.error("Error loading registration content:", error);
+            }
+        });
+    })
+
+    // ---------------------- get previous trainee
+    document.getElementById('getPreviousBtn').addEventListener('click',function(){
+        $.ajax({
+            url: "/Employee/GetPreviousTrainee/" + allInputFields[0].value,
+            type: "GET",
+            success: function (data) {
+                if (data == undefined) {
+                    alert("already the first entity");
+                }
+                else{
+                 RenderEntity(data);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading registration content:", error);
+            }
+        });
+    })
+
+    // ---------------------- get next trainee
+    document.getElementById('getNextBtn').addEventListener('click',function(){
+        $.ajax({
+            url: "/Employee/GetNextTrainee/" + allInputFields[0].value,
+            type: "GET",
+            success: function (data) {
+                if (data == undefined) {
+                    alert("already the last entity");
+                }
+                else {
+                    RenderEntity(data);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading registration content:", error);
+            }
+        });
+    })
+
+    // ---------------------- get last trainee
+    document.getElementById('getLastBtn').addEventListener('click',function(){
+        $.ajax({
+            url: "/Employee/GetLastTrainee",
+            type: "GET",
+            success: function (data) {
+                RenderEntity(data);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading registration content:", error);
+            }
+        });
+    })
+</script>

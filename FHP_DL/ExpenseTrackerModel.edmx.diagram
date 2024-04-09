@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="83eb952d4bfc42e9a85a929dcf19e44c" Name="Diagram1" >
+        <EntityTypeShape EntityType="ExpenseTrackerModel.Category" Width="1.5" PointX="5.875" PointY="4.125" />
+        <EntityTypeShape EntityType="ExpenseTrackerModel.Expense" Width="1.5" PointX="2.375" PointY="2.5" />
+        <EntityTypeShape EntityType="ExpenseTrackerModel.Bills" Width="1.5" PointX="5.875" PointY="1.75" />
+        <AssociationConnector Association="ExpenseTrackerModel.ExpenseBills" />
+        <AssociationConnector Association="ExpenseTrackerModel.CategoryExpense" />
+        <EntityTypeShape EntityType="ExpenseTrackerModel.Users" Width="1.5" PointX="9.625" PointY="1.625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

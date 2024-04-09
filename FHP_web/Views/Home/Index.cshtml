@@ -1,0 +1,190 @@
+﻿@model FHP_VO.VO
+@{
+    ViewData["Title"] = "FHP";
+}
+
+<partial name="_Notification" />
+
+<div id="modalContainer" class="noDisplay">
+    <div id="registrationContainer"></div>
+</div>
+@* ------- nav bar*@
+
+
+@if (Model != null &&  Model.signinUser != null)
+{
+    <table id="traineeDataTable">
+        <thead>
+            <tr>
+                <th style="width:30px;"></th>
+                <th>
+                    Sr. no
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Prefix
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    First Name
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Middle Name
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Last Name
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Education
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Joining Date
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Current Address
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Current Company
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+                <th>
+                    Date Of Birth
+                    <i class="bi bi-sort-alpha-up sortAscending"></i>
+                    <i class="bi bi-sort-alpha-down-alt sortDescending"></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="filterBoxRow">
+                <td></td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+                <td>
+                    <input type="text" name="name" value="" class="textSearchBox" />
+                    <span class="close_btn noDisplay"><i class="bi bi-x-circle-fill"></i></span>
+                </td>
+            </tr>
+          
+
+             @foreach (var trainee in Model.TraineeList)
+             {
+                 <tr>
+                     <td></td>
+                     <td>@trainee.SerialNumber</td>
+                     <td>@trainee.Prefix</td>
+                     <td>@trainee.FirstName</td>
+                     <td>@trainee.MiddleName</td>
+                     <td>@trainee.LastName</td>
+                     <td>@trainee.Education.long_name</td>
+                     <td>@trainee.JoiningDate.ToString().Split('T')[0]</td>
+                     <td>@trainee.CurrentAddress</td>
+                     <td>@trainee.CurrentCompany</td>
+                     <td>@trainee.DateOfBirth.ToString().Split('T')[0]</td>
+                 </tr>
+             }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <script src="~/js/site.js"></script>
+}
+else
+{
+    <style>
+        #mainScreenDescriptionBox{
+            margin:5rem;
+            font-family:cursive;
+        }
+        #mainScreenDescriptionBox h2{
+                color: #A34343;
+        }
+            #mainScreenDescriptionBox h3 {
+                color: #704264;
+            }
+    </style>
+  <div id="mainScreenDescriptionBox">
+      <h2>
+        Welcome to FHP (File Handling Program), your one-stop solution for managing files and performing CRUD (Create, Read, Update, Delete) operations with ease.
+      </h2>
+      <h3>
+        FHP is a powerful yet user-friendly platform designed to streamline your file management tasks. Whether you're a seasoned professional or a novice user, FHP offers intuitive features to help you effortlessly handle your data.
+      </h3>
+  </div>
+    <script>
+        function SignInPopUp() {
+            $.ajax({
+                url: "/Home/SignInPage",
+                type: "GET",
+                success: function (data) {
+                    document.getElementById('modalContainer').classList.remove('noDisplay');
+                    $("#registrationContainer").html(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading registration content:", error);
+                }
+            });
+        }
+    </script>
+}

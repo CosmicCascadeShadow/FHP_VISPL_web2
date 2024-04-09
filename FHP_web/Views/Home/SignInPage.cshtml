@@ -1,0 +1,51 @@
+﻿@model FHP_Res.Entity.UserModel
+@{
+    Layout = null;
+}
+<style>
+    #invalidUser {
+        color: red;
+    }
+</style>
+<form method="post" id="loginForm">
+    <h4 id="invalidUser"></h4>
+    <label asp-for="Id">Email: </label> <br />
+    <input asp-for="Id" class="formInput" id="email" /> <br />
+    <label asp-for="Password">Password: </label> <br />
+    <input asp-for="Password" name="password" id="password" class="formInput" /> <br />
+    @*
+     <input asp-controller="Home" asp-action="SignInPage" type="submit" value="Sign In" />
+    *@
+    <a href="#" id="signinBtn">sign in</a> <br />
+    <button type="button" class="submitButton" id="registerBtn" onclick="GetRegisterationForm()">Register</button>
+</form>
+
+<script>
+    document.getElementById("signinBtn").addEventListener('click', function () {
+        let userId = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        $.ajax({
+            url: "/Employee/Validate/",
+            type: "POST", 
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                Id: userId,
+                Password: password
+            }),
+            success: function (data) {
+                if (data.length==1) {
+                    document.getElementById('invalidUser').innerText = "Invalid username or password";
+                } else {
+                    window.location.href = "/Home/Index";
+                }
+            },
+            error: function (error) {
+                console.error("Error trying sign in:", error);
+            }
+        })
+    })
+
+</script>
