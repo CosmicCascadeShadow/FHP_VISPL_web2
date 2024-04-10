@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FHP_web.styles.css" asp-append-version="true" />
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @* ---------------- bootstrap-icons CDN path*@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -36,7 +36,7 @@
                         </li>
                         @* ------------------------------------- New / Edit / Delete / Clear search will be shown only after login*@
                         @if (Model != null && Model.signinUser != null)
-                                                {
+                        {
                             <li class="nav-item">
                                 <button class="activeBtn nav-menu-link" id="newBtn" onClick="GetTraineeData()" href="">New</button>
                             </li>
@@ -49,6 +49,17 @@
                             <li class="nav-item">
                                 <button class="nav-menu-link activeBtn" href="" id="clearAllFilters">Clear Search</button>
                             </li>
+                            @* -------------- if user role is super admin then we will show the user controls*@
+                            @if (Model.signinUser.Role == 1)
+                            {
+                                <li class="nav-item">
+                                    <button class="nav-menu-link activeBtn" id="">
+                                        <a asp-controller="User" asp-action="Index">
+                                        User Management
+                                        </a>
+                                        </button>
+                                </li>
+                            }
                         }
                         <li class="nav-item">
                             <button class="nav-menu-link activeBtn" id="aboutUsBtn">
@@ -79,9 +90,9 @@
     </header>
     <h1 id="mainScreenScreen">Welcome to FHP</h1>
     <div>
-            @RenderBody()
+        @RenderBody()
     </div>
-  
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     @await RenderSectionAsync("Scripts", required: false)

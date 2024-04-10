@@ -43,6 +43,15 @@ namespace FHP_web.Controllers
         {
             return PartialView("~/Views/Shared/_RegisterationPage.cshtml");
         }
+        [HttpPost]
+        public ActionResult RegisterationPage(UserModel user)
+        {
+            UserRepository repository = new UserRepository();
+            user.Role = 3; // by default the role will be guest user
+            repository.Add(user);
+            TempData["success"] = "Registeration successfull, please sign in";
+            return RedirectToAction("Index", "Home");
+        }
         public List<FHP_Res.Entity.Trainee> GetAllTrainee()
         {
             TraineeRepository repository = new TraineeRepository();

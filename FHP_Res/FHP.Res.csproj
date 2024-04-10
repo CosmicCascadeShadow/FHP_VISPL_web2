@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\Qualification.cs" />
+    <Compile Include="Entity\Role.cs" />
     <Compile Include="Entity\Trainee.cs" />
     <Compile Include="Entity\UserModel.cs" />
     <Compile Include="IniFilesHandle.cs" />

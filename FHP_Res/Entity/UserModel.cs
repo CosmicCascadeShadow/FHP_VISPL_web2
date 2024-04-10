@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace FHP_Res.Entity
         public String Password { get; set; }
 
         public byte Role {  get; set; }
+        [ValidateNever]
+        public string RoleString { get; set; }
     }
 }

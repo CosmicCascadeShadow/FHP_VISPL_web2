@@ -1,9 +1,12 @@
+using FHP_DL;
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // ----------- adding session
 builder.Services.AddSession();
+builder.Services.AddScoped<FHP_DL.IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

@@ -31,9 +31,25 @@ namespace FHP_DL
         {
             return dataHandler.Add(user);
         }
+
+        public bool Delete(string id)
+        {
+            return dataHandler.Delete(id);
+        }
+
+        public List<Role> GetAllRoles()
+        {
+           return dataHandler.GetAllRoles();
+        }
+
         public List<UserModel> GetAllUsers()
         {
             return dataHandler.GetAllUsers();
+        }
+
+        public bool Update(UserModel user)
+        {
+            return dataHandler.Update(user);
         }
     }
 }

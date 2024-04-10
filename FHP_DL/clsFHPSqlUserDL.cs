@@ -44,17 +44,69 @@ namespace FHP_DL
                 }
             }
         }
-        public List<UserModel> GetAllUsers()
+        public List<Role> GetAllRoles()
         {
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM users";
+                //string query = "SELECT * FROM users";
+                string query = "select * from roles";
                 using (SqlCommand command = new SqlCommand(query, sqlConnection))
                 {
                     // --------------- checking whether the db is present or not
                     try
                     {
+                        sqlConnection.Open();
+                    }
+                    // ------------- will create the db
+                    catch (System.Data.SqlClient.SqlException ex)
+                    {
+                        return null;
+                    }
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<Role> roles = new List<Role>();
+                        while (reader.Read())
+                        {
+                            Role role = new Role();
+                            role.Id = Convert.ToByte(reader["id"]);
+                            role.Description = reader["description"].ToString();
+                            roles.Add(role);
+                        }
+                        return roles;
+                    }
+                }
+            }
+        }
+        public bool Update(UserModel user)
+        {
+            string query = "update users set password=@password, role=@role where loginId=@id;";
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, sqlConnection))
+                {
+                    command.Parameters.AddWithValue("@Id", user.Id);
+                    command.Parameters.AddWithValue("@password", (object)user.Password ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@role", (object)user.Role ?? DBNull.Value);
+
                     sqlConnection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+        public List<UserModel> GetAllUsers()
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                //string query = "SELECT * FROM users";
+                string query = "select* from Users left join roles on users.role = roles.id";
+                using (SqlCommand command = new SqlCommand(query, sqlConnection))
+                {
+                    // --------------- checking whether the db is present or not
+                    try
+                    {
+                        sqlConnection.Open();
                     }
                     // ------------- will create the db
                     catch (System.Data.SqlClient.SqlException ex)
@@ -70,10 +122,53 @@ namespace FHP_DL
                             user.Id = reader["loginId"].ToString();
                             user.Password = reader["password"].ToString();
                             user.Role = Convert.ToByte(reader["role"]);
+                            user.RoleString = reader["description"].ToString();
                             users.Add(user);
                         }
                         return users;
                     }
+                }
+                //using (SqlCommand command = new SqlCommand(query, sqlConnection))
+                //{
+                //    // --------------- checking whether the db is present or not
+                //    try
+                //    {
+                //    sqlConnection.Open();
+                //    }
+                //    // ------------- will create the db
+                //    catch (System.Data.SqlClient.SqlException ex)
+                //    {
+                //        return null;
+                //    }
+                //    using (SqlDataReader reader = command.ExecuteReader())
+                //    {
+                //        List<UserModel> users = new List<UserModel>();
+                //        while (reader.Read())
+                //        {
+                //            UserModel user = new UserModel();
+                //            user.Id = reader["loginId"].ToString();
+                //            user.Password = reader["password"].ToString();
+                //            user.Role = Convert.ToByte(reader["role"]);
+                //            users.Add(user);
+                //        }
+                //        return users;
+                //    }
+                //}
+            }
+        }
+
+        public bool Delete(string id)
+        {
+            string query = "delete from Users where loginId=@id";
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, sqlConnection))
+                {
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    sqlConnection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
                 }
             }
         }

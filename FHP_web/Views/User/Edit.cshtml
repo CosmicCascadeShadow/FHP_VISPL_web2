@@ -1,0 +1,67 @@
+﻿@model FHP_Res.Entity.UserModel
+@{
+    Layout = null;
+}
+<style>
+    .form-container {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+        .form-container label {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="password"],
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .form-container input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+</style>
+<div class="form-container">
+
+<h1>Edit</h1>
+
+<form method="Post">
+    <div>
+        <label asp-for="Id"></label>
+        <input asp-for="Id"/>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password"/>
+    </div>
+    <div>
+        <label asp-for="Role"></label>
+        <select asp-for="Role" asp-items="ViewBag.AllRoles" class="form-select pb-2">
+            <option disabled selected>-- select category -- </option>
+        </select>
+    </div>
+    <div>
+        <input type="submit"/>
+    </div>
+</form>
+</div>

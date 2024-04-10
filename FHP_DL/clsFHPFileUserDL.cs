@@ -41,6 +41,16 @@ namespace FHP_DL
             }
         }
 
+        public bool Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Role> GetAllRoles()
+        {
+            throw new NotImplementedException();
+        }
+
         // ------------------- getting all the users from the file 
         public List<UserModel> GetAllUsers()
         {
@@ -64,6 +74,11 @@ namespace FHP_DL
             {
                 return null;
             }
+        }
+
+        public bool Update(UserModel user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

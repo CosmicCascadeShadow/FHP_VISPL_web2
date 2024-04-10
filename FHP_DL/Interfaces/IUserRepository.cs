@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace FHP_DL
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
         bool Add(UserModel user);
         List<UserModel> GetAllUsers();
+        List<Role> GetAllRoles();
+        bool Update(UserModel user);
+        bool Delete(string id);
     }
 }
